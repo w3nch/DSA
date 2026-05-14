@@ -1,5 +1,6 @@
 # Double linked list
 
+
 class Node:
     def __init__(self, info=None):
         self.prev = None
@@ -94,18 +95,49 @@ class DoubleLL:
 
             current = current.next
 
+    def delete_at(self, value):
+        if self.head is None:
+            print("empty LL")
+            return
+
+        current = self.head
+
+        while current:
+            # node found
+            if current.info == value:
+                # deleting head
+                if current == self.head:
+                    self.head = current.next
+
+                    if self.head:
+                        self.head.prev = None
+                    else:
+                        self.tail = None
+
+                # deleting tail
+                elif current == self.tail:
+                    self.tail = current.prev
+                    self.tail.next = None
+
+                # deleting middle node
+                else:
+                    current.prev.next = current.next
+                    current.next.prev = current.prev
+
+                return
+
+            current = current.next
+
+        print("value not found")
+
 
 n1 = DoubleLL()
 
 n1.append_end(10)
-n1.append_end(20)
-n1.append_end(10)
-n1.append_end(20)
 n1.append_end("dosa")
 
 n1.travel()
 
 n1.append_start(200)
+n1.delete_at(10)
 n1.travel()
-print(n1.search(20))
-n1.counter(1)
